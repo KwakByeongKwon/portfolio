@@ -1,0 +1,418 @@
+{% extends "player_info/base.html" %}
+{% block top %}
+<br id="first">
+<center><h1>투수 분석 기록</h1></center><hr>
+{% endblock %}
+
+{% block content %}<center>
+<div class="container" style="width:800px;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th colspan="9" style="background-color: rgb(255, 255, 210);">{{ pitching_data.schoolname }}</th>
+            </tr>
+        </thead>
+        <tr>
+            <th>학년</th>
+            <th>이름</th>
+            <th>유형</th>
+            <th>대회이름</th>
+            <th>상대팀</th>
+            <th>경기날짜</th>
+        </tr>
+        </tr>
+        <tr>
+            <td>{{ pitching_data.grade }}</td>
+            <td>{{ pitching_data.playername }}</td>
+            <td>{{ pitching_data.pitchingtype }}</td>
+            <td>{{ opponent_rec.gamename }}</td>
+            <td>{{ opponent_rec.opponent_name }}</td>
+            <td>{{ opponent_rec.opponent_date }}</td>
+        </tr>
+    </table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th colspan="8" style="background-color: rgb(255, 255, 210);">
+                    Left / Right 구종 & 코스 분석
+                </th>
+            </tr>
+        </thead>
+        {% for i in opponent_rec.balldata_set.all %}
+        <tr>
+            <th colspan="3">
+                Left Pitching Total : {{ i.left_hitter_total_pitches }}
+            </th>
+            <th colspan="3">
+                Right Pitching Total : {{ i.right_hitter_total_pitches }}
+            </th>
+        </tr>
+        <tr>
+            <td>Fast Ball Total </td> 
+            <th>{{ i.left_hitter_total_fast_ball }}</th>
+            {% for j in left_pitch_list %}
+                {% if forloop.counter == 1 and not forloop.last %}
+                    <th>{{ j }}%</th>   
+                {% endif %}
+            {% endfor %}
+            <td>Fast Ball Total </td>
+            <th>{{ i.right_hitter_total_fast_ball }} </th>
+            {% for j in right_pitch_list %}
+                {% if forloop.counter == 1 and not forloop.last %}
+                    <th>{{ j }}%</th>   
+                {% endif %}
+            {% endfor %}
+            
+        </tr>
+        <tr>
+            <td>Breaking Ball Total </td>
+            <th>{{ i.left_hitter_total_breaking_ball }}</th>
+            {% for j in left_pitch_list %}
+                {% if forloop.counter == 2 and not forloop.last %}
+                    <th>{{ j }}%</th>   
+                {% endif %}
+            {% endfor %}
+            <td>Breaking Ball Total </td>
+            <th>{{ i.right_hitter_total_breaking_ball }}</th>
+            {% for j in right_pitch_list %}
+                {% if forloop.counter == 2 and not forloop.last %}
+                    <th>{{ j }}%</th>   
+                {% endif %}
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>Speed Off Ball Total </td>
+            <th>{{ i.left_hitter_total_speed_off_ball }}</th>
+            {% for j in left_pitch_list %}
+                {% if forloop.counter == 3 %}
+                    <th>{{ j }}%</th>   
+                {% endif %}
+            {% endfor %}
+            <td>Speed Off Ball Total </td>
+            <th>{{ i.right_hitter_total_speed_off_ball }}</th>
+            {% for j in right_pitch_list %}
+                {% if forloop.counter == 3 %}
+                    <th>{{ j }}%</th>   
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+    </table>
+    <table style="background-color: rgb(255, 255, 210);">
+        <tr>
+            <th height="30px" colspan='3' style="background-color:rgb(255, 255, 210)">VS Left Hitter</th>
+            <td width="10px" rowspan="4" style="background-color:rgb(245, 245, 245)"></td>
+            <th colspan='3'>Total</th>
+            <td width="10px" rowspan="4" style="background-color:rgb(245, 245, 245)"></td>
+            <th colspan='3' style="background-color:rgb(255, 255, 210)">VS Right Hitter</th>
+        </tr>
+        <tr>
+            <td style="background-image: url(/static/pic.PNG); text-align: right;" width="83px">
+                {% for i in L_lst %}
+                    {% if forloop.counter <= 9 %}
+                        {{ i }}% <br>
+                        {% if forloop.counter|divisibleby:3 and forloop.counter <= 8 %}
+                            </td><td style="background-image: url(/static/pic.PNG); text-align: right;" width="83px">
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </td>
+    
+            {% for i in total_per %}
+                {% if forloop.counter <= 3 %}
+                    {% if forloop.counter == 1 %}
+                    <td width="70px">
+                        <span style="font-weight: bold;">1</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        {{i}}%
+                        <br>
+                        &nbsp;
+                    </td>
+                    {% endif %}
+                    {% if forloop.counter == 2 %}
+                    <td width="70px">
+                        <span style="font-weight: bold;">2</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        {{i}}%
+                        <br>
+                        &nbsp;
+                    </td>
+                    {% endif %}
+                    {% if forloop.counter == 3 %}
+                    <td width="70px">
+                        <span style="font-weight: bold;">3</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        {{i}}%
+                        <br>
+                        &nbsp;
+                    </td>
+                    {% endif %}
+    
+                {% endif %}
+            {% endfor %}
+            <td style="background-image: url(/static/pic.PNG); text-align: right;" width="83px">
+                {% for i in R_lst %}
+                    {% if forloop.counter <= 9 %}
+                        {{ i }}% <br>
+                        {% if forloop.counter|divisibleby:3 and forloop.counter <= 8 %}
+                            </td><td style="background-image: url(/static/pic.PNG); text-align: right;" width="83px">
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td style="background-image: url(/static/pic.PNG); text-align: right;">
+                {% for i in L_lst %}
+                    {% if 9 < forloop.counter and forloop.counter <= 18 %}
+                        {{ i }}% <br>
+                        {% if forloop.counter|divisibleby:3 and forloop.counter <= 17 %}
+                            </td><td style="background-image: url(/static/pic.PNG); text-align: right;">
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% for i in total_per %}
+                {% if 3 < forloop.counter and forloop.counter <= 6 %}
+                    {% if forloop.counter == 4 %}
+                    <td width="70px">
+                        <span style="font-weight: bold;">4</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        {{i}}%
+                        <br>
+                        &nbsp;
+                    </td>
+                    {% endif %}
+                    {% if forloop.counter == 5 %}
+                    <td width="70px">
+                        <span style="font-weight: bold;">5</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        {{i}}%
+                        <br>
+                        &nbsp;
+                    </td>
+                    {% endif %}
+                    {% if forloop.counter == 6 %}
+                    <td width="70px">
+                        <span style="font-weight: bold;">6</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        {{i}}%
+                        <br>
+                        &nbsp;
+                    </td>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            
+            <td style="background-image: url(/static/pic.PNG); text-align: right;">
+                {% for i in R_lst %}
+                    {% if 9 < forloop.counter and forloop.counter <= 18 %}
+                        {{ i }}% <br>
+                        {% if forloop.counter|divisibleby:3 and forloop.counter <= 17 %}
+                            </td><td style="background-image: url(/static/pic.PNG); text-align: right;">
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </td>
+    
+        </tr>
+        <tr>
+            <td style="background-image: url(/static/pic.PNG); text-align: right;">
+                {% for i in L_lst %}
+                    {% if 18 < forloop.counter %}
+                        {{ i }}% <br>
+                        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                            </td><td style="background-image: url(/static/pic.PNG); text-align: right;">
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% for i in total_per %}
+                {% if forloop.counter > 6%}
+                    {% if forloop.counter == 7 %}
+                    <td width="70px">
+                        <span style="font-weight: bold;">7</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        {{i}}%
+                        <br>
+                        &nbsp;
+                    </td>
+                    {% endif %}
+                    {% if forloop.counter == 8 %}
+                    <td width="70px">
+                        <span style="font-weight: bold;">8</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        {{i}}%
+                        <br>
+                        &nbsp;
+                    </td>
+                    {% endif %}
+                    {% if forloop.counter == 9 %}
+                    <td width="70px">
+                        <span style="font-weight: bold;">9</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br>
+                        {{i}}%
+                        <br>
+                        &nbsp;
+                    </td>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            
+            <td style="background-image: url(/static/pic.PNG); text-align: right;">
+                {% for i in R_lst %}
+                    {% if 18 < forloop.counter %}
+                        {{ i }}% <br>
+                        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                            </td><td style="background-image: url(/static/pic.PNG); text-align: right;">
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th colspan="12" style="background-color: rgb(245, 245, 245);">
+                ※투수 시점으로 기록 됨※
+            </th>
+        </tr>
+    </table>
+    <br>
+    <table>
+        <tr>
+            <th colspan="12" style="background-color: rgb(255, 255, 210);">타순 & 구종 비율</th>
+        </tr>
+        <tr>
+            <td colspan='12'>
+                <img src="{{ graphic3 }}" alt="사진" style="width: 700px;">
+            </td>
+        </tr>
+    </table>
+<br>
+<br id="secound">
+    <h1>Speed / Strike, Ball Graph</h1>
+<hr>
+    <table style="background-color: rgb(245, 245, 245);">
+        <tr>
+            <th colspan="3" style="background-color: rgb(255, 255, 210);">Speed Info</th>
+        </tr>
+        <tr>
+            <td colspan='9'>
+                <img src="{{ graphic }}" alt="사진" style="width: 700px;">
+            </td>
+        </tr>
+        <tr>
+            <th colspan="3">총 피칭 개수 : {{ ball_data.total_pitches }}</th>
+        </tr>
+        <tr>
+            <th>
+                Fast Ball 평균 구속
+            </th>
+            <th>
+                Breaking Ball 평균 구속
+            </th>
+            <th>
+                Speed-Off Ball 평균 구속
+            </th>
+        </tr>
+        <tr>
+            <td>
+                {{fast_ball_mean}}km/h          
+            </td>
+            <td>
+                {{breaking_mean}}km/h
+            </td>
+            <td>
+                {{speed_off_mean}}km/h
+            </td>  
+        </tr>
+    </table>
+<hr>
+    <table style="background-color: rgb(245, 245, 245);">
+        <tr>
+            <th colspan="3" style="background-color: rgb(255, 255, 210);">Strike & Ball Percentage</th>
+        </tr>
+        <tr>
+            <td colspan='9'>
+                <img src="{{ graphic2 }}" alt="사진" style="width: 700px;">
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Fast Ball Total
+            </th>
+            <th>
+                Breaking Ball Total
+            </th>
+            <th>
+                Speed-Off Ball Total
+            </th>
+        </tr>
+        <tr>
+            <td width="250px">
+                Strike : {{fast_S_total}}%<br>
+                Ball : {{fast_B_total}}%  
+            </td>
+            <td width="250px">
+                Strike : {{breaking_S_total}}%<br>
+                Ball : {{breaking_B_total}}%  
+            </td>
+            <td width="250px">
+                Strike : {{speedoff_S_total}}%<br>
+                Ball : {{speedoff_B_total}}%  
+            </td>  
+        </tr>
+    </table>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1> Record </h1>
+<hr>
+    <table class="table table-striped">
+        {% for balldata in opponent_rec.balldata_set.all %}
+        <tr>
+            <th colspan="10">Pitching Total : {{ balldata.total_pitches }}</th>
+        </tr>
+        <tr>
+            <th colspan="3" style="width: 300px;">Fast Ball Total : {{ balldata.total_fast_ball }} </th>
+            <th colspan="3" style="width: 300px;">Breaking Ball Total : {{ balldata.total_breaking_ball }}</th>
+            <th colspan="3" style="width: 300px;">Speed Off Ball Total : {{ balldata.total_speed_off_ball }}</th>
+        </tr>
+        <tr>
+            <td>포심<br>{{ balldata.foursim_ball }}</td>
+            <td>투심<br>{{ balldata.twosim_ball }}</td>
+            <td>커터<br>{{ balldata.cutfast_ball }}</td>
+            <td>커브<br>{{ balldata.curve_ball }}</td>
+            <td>슬라이더<br>{{ balldata.slider_ball }}</td>
+            <td>싱커<br>{{ balldata.sinker_ball }}</td>
+            <td>써클<br>{{ balldata.circlechan_ball }}</td>
+            <td>스플<br>{{ balldata.splitter_ball }}</td>
+            <td>포크<br>{{ balldata.fork_ball }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <table class="table table-striped">
+        {% for record in opponent_rec.record_set.all %}
+        <tr>
+            <th>{{ forloop.counter }}구</th>
+            <th>{{ record.record }}</th>
+            <th>{{ record.strike_ball }}</th>
+            <th>Speed : {{ record.speed }}</th>
+            <th>코스 : {{ record.ballcourse }}</th>
+            <th>{{ record.hitter_num }}번 </th>
+            <th>{{ record.position }} Hitter</th>
+        </tr>
+        {% endfor %}
+    </table>    
+    <p>
+        <a href="{% url 'pitch:detail' pitching_data.id %}" class="btn btn-primary" id="btn">
+        목록으로 돌아가기
+        </a>
+    </p>
+</div>
+
+
+{%endblock%}
+

@@ -1,0 +1,349 @@
+{% extends "player_info/base.html" %}
+{% block top %}<center>
+    <h1>피칭 정보 입력</h1>
+    <hr>
+</center>{% endblock %}
+
+{% block content %}<center>
+    <p><a href="{% url 'pitch:index' %}">목록으로 돌아가기</a></p>
+    <div class="container" style="width: 800px;">
+        <form action="{% url 'pitch:pitching_avg' pitching_data.id %}#scroll" method="post">
+            {% csrf_token %}
+            <table class="table table-striped">
+                <tr>
+                    <th colspan="8">{{pitching_data.schoolname}}</th>
+                </tr>
+                <tr>
+                    <th>학년</th>
+                    <th>이름</th>
+                    <th>유형</th>
+                </tr>
+                <tr>
+                    <td>{{pitching_data.grade}}</td>
+                    <td>{{pitching_data.playername}}</td>
+                    <td>{{pitching_data.pitchingtype}}</td>
+                </tr>
+            </table>
+    </div>
+    <div class="container" style="width: 900px;">
+        <hr>
+        <table class="table table-secondary">
+            <tr>
+                <th id="scroll">Fast Ball</th>
+                <th>Breaking Ball</th>
+                <th>Speed Off Ball</th>
+            </tr>
+            <tr>
+                <td class="clickable-td">
+                    <input type="radio" name="pitchinginfo" value="foursim" id="foursim">
+                    <label for="foursim">포심 패스트볼</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" name="pitchinginfo" value="curve" id="curve">
+                    <label for="curve">커브</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" name="pitchinginfo" value="circlechan" id="circlechan">
+                    <label for="circlechan">서클 체인지업</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="clickable-td">
+                    <input type="radio" name="pitchinginfo" value="twosim" id="twosim">
+                    <label for="twosim">투심 패스트볼</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" name="pitchinginfo" value="slider" id="slider">
+                    <label for="slider">슬라이더</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" name="pitchinginfo" value="splitter" id="splitter">
+                    <label for="splitter">스플리터</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="clickable-td"> 
+                    <input type="radio" name="pitchinginfo" value="cutfast" id="cutfast">
+                    <label for="cutfast">커터 패스트볼</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" name="pitchinginfo" value="sinker" id="sinker">
+                    <label for="sinker">싱커</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" name="pitchinginfo" value="forkball" id="forkball">
+                    <label for="forkball">포크</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <p>※ 투수의 시점으로 기록 할 것 ※</p>
+    <table width="200px" style="background-color: antiquewhite;">
+        <tr>
+            <th>
+                Speed
+            </th>
+        </tr>
+        <tr>
+            <th>
+                {{ form_class.speed }}km/h
+            </th>
+        </tr>
+    </table>
+    <div>
+        <table width="185px" height="200px" style="background-color: antiquewhite;">
+            <tr>
+                <td class="clickable-td">
+                    <input type="radio" value="1" name="ballcourse" id="course1" label for="course1">
+                    <label for="course1">1</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" value="2" name="ballcourse" id="course2" label for="course2">
+                    <label for="course2">2</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" value="3" name="ballcourse" id="course3" label for="course3">
+                    <label for="course3">3</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="clickable-td">
+                    <input type="radio" value="4" name="ballcourse" id="course4" label for="course4">
+                    <label for="course4">4</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" value="5" name="ballcourse" id="course5" label for="course5">
+                    <label for="course5">5</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" value="6" name="ballcourse" id="course6" label for="course6">
+                    <label for="course6">6</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="clickable-td">
+                    <input type="radio" value="7" name="ballcourse" id="course7" label for="course7">
+                    <label for="course7">7</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" value="8" name="ballcourse" id="course8" label for="course8">
+                    <label for="course8">8</label>
+                </td>
+                <td class="clickable-td">
+                    <input type="radio" value="9" name="ballcourse" id="course9" label for="course9">
+                    <label for="course9">9</label>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <table width="350px" style="background-color: antiquewhite;">
+        <tr>
+            <th colspan="2">        
+                STRIKE OR BALL
+            </th>
+        </tr>
+        <tr>
+            <td class="clickable-td">
+                <label for="strike">Strike</label>
+                <input type="radio" name="strikeball" id="strike" value="S">
+            </td>
+            <td class="clickable-td">
+                <label for="ball">Ball</label>
+                <input type="radio" name="strikeball" id="ball" value="B">
+            </td>
+        </tr>
+    </table>
+<br>
+    <table width="350px" style="background-color: antiquewhite;" >
+        <tr>
+            <th colspan='5'>
+                상대 타자
+            </th>
+        </tr>
+        <tr>
+            <td>
+                타순
+                <select name="hitter_num">
+                    <option value="1" {% if hitter_num == 1 %}selected{% endif %}>1</option>
+                    <option value="2" {% if hitter_num == 2 %}selected{% endif %}>2</option>
+                    <option value="3" {% if hitter_num == 3 %}selected{% endif %}>3</option>
+                    <option value="4" {% if hitter_num == 4 %}selected{% endif %}>4</option>
+                    <option value="5" {% if hitter_num == 5 %}selected{% endif %}>5</option>
+                    <option value="6" {% if hitter_num == 6 %}selected{% endif %}>6</option>
+                    <option value="7" {% if hitter_num == 7 %}selected{% endif %}>7</option>
+                    <option value="8" {% if hitter_num == 8 %}selected{% endif %}>8</option>
+                    <option value="9" {% if hitter_num == 9 %}selected{% endif %}>9</option>
+                </select>
+            </td>
+            {% if leftright == 'Left' %}
+            <td class="clickable-td">
+                <label for="left">좌타</label>
+                <input type="radio" name="leftright" id="left" value="Left" checked>
+            </td>
+            <td class="clickable-td">
+                <label for="right">우타</label>
+                <input type="radio" name="leftright" id="right" value="Right">
+            </td>
+            {% else %}
+            <td class="clickable-td">
+                <label for="left">좌타</label>
+                <input type="radio" name="leftright" id="left" value="Left">
+            </td>
+            <td class="clickable-td">
+                <label for="right">우타</label>
+                <input type="radio" name="leftright" id="right" value="Right" checked>
+            </td>
+            {% endif %}
+        </tr>
+    </table>
+    <br>
+    <h1 id="err">{{ error_message }}</h1>
+    <center><input type="submit" class="btn btn-primary" value="Pitching!"></center>
+    
+    </form>
+    <hr>
+
+    <div class="container" style="width: 1000px;">
+        <table class="table table-secondary">
+            {% for i in opponent_start.balldata_set.all %}
+            <tr>
+                <th colspan="10">Pitching Total : {{ i.total_pitches }}</th>
+            </tr>
+            <tr>
+                <th colspan="3" style="width: 300px;">Fast Ball Total : {{ i.total_fast_ball }} </th>
+                <th colspan="3" style="width: 300px;">Breaking Ball Total : {{ i.total_breaking_ball }}</th>
+                <th colspan="3" style="width: 300px;">Speed Off Ball Total : {{ i.total_speed_off_ball }}</th>
+            </tr>
+            <tr>
+                <td>포심<br>{{ i.foursim_ball }}</td>
+                <td>투심<br>{{ i.twosim_ball }}</td>
+                <td>커터<br>{{ i.cutfast_ball }}</td>
+                <td>커브<br>{{ i.curve_ball }}</td>
+                <td>슬라이더<br>{{ i.slider_ball }}</td>
+                <td>싱커<br>{{ i.sinker_ball }}</td>
+                <td>써클 체인지업<br>{{ i.circlechan_ball }}</td>
+                <td>스플리터<br>{{ i.splitter_ball }}</td>
+                <td>포크볼<br>{{ i.fork_ball }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    <p><a href="{% url 'pitch:index' %}" class="btn btn-danger">피칭종료 목록으로</a></p>
+    <hr>
+        <table class="table table-striped">
+            {% for i in opponent_start.record_set.all|slice:"::-1" %}
+            <form action="{% url 'pitch:update' pitching_data.id i.id %}" method="POST">
+                {% csrf_token %}
+            <tr>
+                <th>
+                    {{ forloop.revcounter }}구: 
+                    <select name="update_record">
+                        <option value="foursim" {% if i.record == "foursim" %}selected{% endif %}>foursim</option>
+                        <option value="curve" {% if i.record == "curve" %}selected{% endif %}>curve</option>
+                        <option value="circlechan" {% if i.record == "circlechan" %}selected{% endif %}>circlechan</option>
+                        <option value="twosim" {% if i.record == "twosim" %}selected{% endif %}>twosim</option>
+                        <option value="slider" {% if i.record == "slider" %}selected{% endif %}>slider</option>
+                        <option value="splitter" {% if i.record == "splitter" %}selected{% endif %}>splitter</option>
+                        <option value="cutfast" {% if i.record == "cutfast" %}selected{% endif %}>cutfast</option>
+                        <option value="sinker" {% if i.record == "sinker" %}selected{% endif %}>sinker</option>
+                        <option value="forkball" {% if i.record == "forkball" %}selected{% endif %}>forkball</option>
+                    </select>
+                </th>
+                <th>코스 : 
+                    <select name="update_course">
+                        <option value="1" {% if i.ballcourse == 1 %}selected{% endif %}>1</option>
+                        <option value="2" {% if i.ballcourse == 2 %}selected{% endif %}>2</option>
+                        <option value="3" {% if i.ballcourse == 3 %}selected{% endif %}>3</option>
+                        <option value="4" {% if i.ballcourse == 4 %}selected{% endif %}>4</option>
+                        <option value="5" {% if i.ballcourse == 5 %}selected{% endif %}>5</option>
+                        <option value="6" {% if i.ballcourse == 6 %}selected{% endif %}>6</option>
+                        <option value="7" {% if i.ballcourse == 7 %}selected{% endif %}>7</option>
+                        <option value="8" {% if i.ballcourse == 8 %}selected{% endif %}>8</option>
+                        <option value="9" {% if i.ballcourse == 9 %}selected{% endif %}>9</option>
+                    </select>
+                </th>
+                <th>
+                    <select name="update_strikeball">
+                        <option value="S" {% if i.strike_ball == 'S' %}selected{% endif %}>Strike</option>
+                        <option value="B" {% if i.strike_ball == 'B' %}selected{% endif %}>Ball</option>
+                    </select>
+                </th>
+                <th>Speed : 
+                    <input type="text" name="update_speed" value="{{ i.speed }}" style="width: 50px;">km/h
+                </th>
+                <th>
+                    <select name="update_hitter_num">
+                        <option value="1" {% if i.hitter_num == 1 %}selected{% endif %}>1</option>
+                        <option value="2" {% if i.hitter_num == 2 %}selected{% endif %}>2</option>
+                        <option value="3" {% if i.hitter_num == 3 %}selected{% endif %}>3</option>
+                        <option value="4" {% if i.hitter_num == 4 %}selected{% endif %}>4</option>
+                        <option value="5" {% if i.hitter_num == 5 %}selected{% endif %}>5</option>
+                        <option value="6" {% if i.hitter_num == 6 %}selected{% endif %}>6</option>
+                        <option value="7" {% if i.hitter_num == 7 %}selected{% endif %}>7</option>
+                        <option value="8" {% if i.hitter_num == 8 %}selected{% endif %}>8</option>
+                        <option value="9" {% if i.hitter_num == 9 %}selected{% endif %}>9</option>
+                    </select>
+                    번
+                </th>
+                <th>
+                    <select name="update_leftright">
+                        <option value="Left" {% if i.position ==  'Left'  %}selected{% endif %}>Left Hitter</option>
+                        <option value="Right" {% if i.position ==  'Right'  %}selected{% endif %}>Right Hitter</option>
+                    </select>
+                </th>
+            
+                <th>
+                    <button class="btn btn-primary">수정</button>
+                </th>
+            </tr>
+        </form>
+            {% endfor %}
+        </table>
+        <hr>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var clickableTds = document.querySelectorAll('.clickable-td');
+    
+            clickableTds.forEach(function (td) {
+                var input = td.querySelector('input[type="radio"]');
+    
+                // <td>의 클릭 이벤트 처리
+                td.addEventListener('click', function (event) {
+                    // 라디오 버튼을 선택/해제
+                    input.checked = !input.checked;
+    
+                    // 기존에 선택된 모든 td에서 클래스 제거 및 스타일 초기화
+                    clickableTds.forEach(function (otherTd) {
+                        otherTd.classList.remove('selected-td');
+                        otherTd.style.backgroundColor = '';
+                    });
+    
+                    // 현재 클릭된 td에 클래스 추가 및 배경색 변경
+                    td.classList.add('selected-td');
+                    td.style.backgroundColor = '#f72121';
+    
+                    // 클릭 이벤트 전파 방지
+                    event.stopPropagation();
+                });
+    
+                // 라디오 버튼의 클릭 이벤트 처리
+                input.addEventListener('click', function (event) {
+                    // 현재 클릭된 td에 클래스 추가 및 배경색 변경
+                    td.classList.add('selected-td');
+                    td.style.backgroundColor = '#f72121';
+    
+                    // 기존에 선택된 모든 td에서 클래스 제거 및 스타일 초기화
+                    clickableTds.forEach(function (otherTd) {
+                        if (otherTd !== td) {
+                            otherTd.classList.remove('selected-td');
+                            otherTd.style.backgroundColor = '';
+                        }
+                    });
+    
+                    // 클릭 이벤트 전파 방지
+                    event.stopPropagation();
+                });
+            });
+        });
+    </script>
+    {% endblock %}

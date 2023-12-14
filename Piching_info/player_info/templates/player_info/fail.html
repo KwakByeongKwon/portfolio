@@ -1,0 +1,25 @@
+{% extends "player_info/base.html" %}
+
+{% block content %}
+<form method="POST" class="mt-3">
+    {% csrf_token %}
+    <div class="container" style="width: 510px;">
+        <table class="table table-striped">
+            <tr>
+                <th colspan="2">
+                    <h3>
+                    경기 기록이 없습니다
+                </h3>
+            </th>
+            </tr>
+            <tr>
+                <div class="container" style="width: 510px; text-align: center; margin-top: 10px;">
+                <th colspan="2">
+                        <a href="{% url 'pitch:index' %}" class="btn btn-primary">목록으로 돌아가기</a>
+                    </div>
+                </th>
+            </tr>
+        </table>
+    </div>
+</form>
+{% endblock %}

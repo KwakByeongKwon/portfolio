@@ -1,0 +1,41 @@
+{% extends "player_info/base.html" %}
+{% block top %}<h1>
+    <center>경기기록 정보 삭제
+</h1>
+<hr>
+</center>{% endblock %}
+{% block content %}
+<div class="container" style="width: 800px;">
+    <table class="table table-striped">
+        <tr>
+            <th>대회명</th>
+            <td>{{opponent_data_del.gamename}}</td>
+        </tr>
+        <tr>
+            <th>상대팀명</th>
+            <td>{{opponent_data_del.opponent_name}}</td>
+        </tr>
+        <tr>
+            <th>경기날짜</th>
+            <td>{{opponent_data_del.opponent_date}}</td>
+        </tr>
+        <tr>
+            <form action="{% url 'pitch:delete_opponent' opponent_data_del.id pitching_data.id %}" method="POST"
+                class="mt-3">
+                {% csrf_token %}
+                <td colspan="2" style="color: red;">정말로 삭제하시겠습니까?
+                    <button type="submit" class="btn btn-danger">확인</button>
+                </td>
+            </form>
+        </tr>
+        <tr>
+            <form action="{% url 'pitch:detail' pitching_data.id %}" class="mt-3">
+                <td colspan="2">
+                    <button type="submit" class="btn btn-primary">아니요</button>
+                </td>
+            </form>
+        </tr>
+
+    </table>
+</div>
+{% endblock %}

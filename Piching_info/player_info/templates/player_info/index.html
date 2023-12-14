@@ -1,0 +1,51 @@
+{% extends "player_info/base.html" %}
+
+{% block content %}
+    <center>
+        <form action="{% url 'pitch:player' %}" class="mb-3">
+            <button type="submit" class="btn btn-danger">정보 추가하기</button>
+        </form>
+    </center>
+
+    <div class="container" style="width: 800px;">
+        {% for info in object_list %}
+            <table class="table table-striped">
+                <tr>
+                    <th style="width: 230px;">학교명</th>
+                    <td>{{info.schoolname}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 100px;">이름</th>
+                    <td>{{info.playername}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 200px;">학년 / 유형</th>
+                    <td>{{info.grade}}
+                        /
+                        {{info.pitchingtype}}</td>
+                </tr>
+                <tr>
+                    <th style="width: 300px;">정보 등록일</th>
+                    <td>{{info.pub_date}}</td>
+                </tr>
+                <tr>
+                    <div class="container" style="width: 510px; text-align: center; margin-top: 10px;">
+                        <th colspan="2">
+                            <a href="{% url 'pitch:detail' info.id %}" class="btn btn-primary"
+                            >상세 정보
+                        </a>
+                        <a href="{% url 'pitch:vsinfo' info.id %}" class="btn btn-primary"
+                            >피칭 시작
+                        </a>
+                        </th>
+                    </div>
+                </tr>
+            </table>
+            {% if not forloop.last %}
+                <hr>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
