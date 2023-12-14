@@ -1,0 +1,36 @@
+{% extends "cafeinformation/base.html" %}
+{% block content %}
+    <div class="container" style="width: 600px;" >
+        <table class="table table-striped">
+            <tr>
+                <th>자치구</th>
+                <th>{{ detail_data_name }}</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a href="{{ detail_data.file.url }}" download>
+                        다운로드
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <form action="{% url 'cafe:preview' detail_data.id %}">
+                    <th colspan="2">
+                        <button type="submit" class="btn btn-primary">다운로드 파일 미리보기
+                        </button>
+                    </th>
+                </form>
+            </tr>
+                <tr>
+                <th colspan="2">
+                    <form action="{% url 'cafe:detail' %}">
+                        <button type="submit" class="btn btn-danger">
+                            뒤로가기
+                        </button>
+                    </form>
+                </th>
+            </tr>
+        </table>
+    <div>
+        
+{% endblock %}
