@@ -1,0 +1,75 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>게시판</title>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+<div class="container text-center" style="font-size: 23px; height: 1000px;">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1></h1>
+        <h1>게시판</h1>
+        <a href="/board/new" class="btn btn-primary">글등록</a>
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+            <th colspan="2">기타</th>
+        </tr>
+        <tr th:each="board : ${boards}">
+            <td th:text="${board.getNum()}"></td>
+            <td>
+                <a th:text="${board.getTitle()}" th:href="@{/board/detail/{id}(id=${board.getNum()})}"></a>
+            </td>
+            <td th:text="${board.getWriter()}"></td>
+            <td th:text="${board.changeDate()}"></td>
+            <td th:text="${board.getCnt()}"></td>
+            <td>
+                <a th:href="@{/board/edit/{num}(num=${board.getNum()})}" class="btn btn-primary">수정</a>
+            </td>
+            <td>
+                <a th:href="@{/board/delete/{num}(num=${board.getNum()})}" class="btn btn-danger">삭제</a>
+            </td>
+        </tr>
+    </table>
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            <li>
+                <a th:href="@{/board(page=1, size=${boards.size})}">처음</a>
+                &nbsp
+            </li>
+            <li>
+                <a th:attr="href=${nowPage + 1 != 1} ? @{/board(page=${nowPage}, size=${boards.size})} : @{/board(page=1, size=${boards.size})}">이전</a>
+                &nbsp
+            </li>
+
+            <li th:if="${boards.getTotalPages() != 0}" th:each="page, stat : ${#numbers.sequence(startPage, endPage)}">
+                <a th:if="${nowPage + 1 != page}" th:href="@{/board(page=${page})}" th:text="${page}"></a>
+                <strong th:if="${nowPage + 1 == page}" th:text="${page}" style="color: red"></strong>
+                &nbsp
+            </li>
+            <li th:if="${boards.getTotalPages() == 0}">
+                <strong th:text="${nowPage}" style="color: red"></strong>
+                &nbsp
+            </li>
+
+            <li>
+                <a th:attr="href=${nowPage + 1 != boards.totalPages} ? @{/board(page=${nowPage + 2}, size=${boards.size})} : @{/board(page=${boards.totalPages}, size=${boards.size})}">다음</a>
+                &nbsp
+            </li>
+            <li>
+                <a th:href="@{/board(page=${boards.totalPages}, size=${boards.size})}">마지막</a>
+                &nbsp
+            </li>
+        </ul>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
